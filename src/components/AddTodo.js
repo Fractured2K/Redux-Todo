@@ -19,7 +19,11 @@ class AddTodo extends Component {
     addTodo = e => {
         e.preventDefault();
 
-        if (this.state.todoText.length === 0 || this.state.todoText === '') return this.setState({ errors: `Please make sure you entered a to-do` })
+        // Check for empty to-do
+        if (this.state.todoText.length === 0) return this.setState({ errors: `Please enter something to-do` })
+
+        // check if to-do is longer than 26 characters
+        if (this.state.todoText.length > 26) return this.setState({ errors: `Sorry, to-do's can't be longer than 26 Characters` })
 
         this.props.addTodo(this.state.todoText)
 
@@ -33,7 +37,7 @@ class AddTodo extends Component {
         return (
             <div className="add-todo">
                 <form onSubmit={this.addTodo}>
-                    <input className={this.state.errors.length === 0 ? `add-todo-input` : 'error-input'} type="text" name="todoText" onChange={this.onChange} value={this.state.todoText} placeholder="Enter to-do..." />
+                    <input className={this.state.errors.length === 0 ? `add-todo-input` : 'error-input'} type="text" name="todoText" onChange={this.onChange} value={this.state.todoText} placeholder={this.state.errors.length === 0 ? 'Enter to-do...' : 'You forgot to enter a to-do'} />
                     <button type="submit">Add to-do</button>
                 </form>
 
